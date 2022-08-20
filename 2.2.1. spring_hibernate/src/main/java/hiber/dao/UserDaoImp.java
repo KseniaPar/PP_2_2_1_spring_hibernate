@@ -26,4 +26,12 @@ public class UserDaoImp implements UserDao {
       return query.getResultList();
    }
 
+   @Override
+   public User findUser(String model, int series) {
+      //String HQL="from User user LEFT OUTER JOIN FETCH user.employee WHERE user.addressId=:addrId";
+      String HQL="select user from User user where user.car.model=:model and user.car.series=:series";
+      return sessionFactory.getCurrentSession().createQuery(HQL, User.class).
+              setParameter("model", model).setParameter("series", series).uniqueResult();
+   }
+
 }
